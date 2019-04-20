@@ -9,7 +9,6 @@ const getColor = value => {
 class Counter extends React.Component {
   state = {
     value: 0,
-    detal: this.props.initialDelta || 0,
     autoIncreaseOn: this.props.initialautoIncreaseOn,
   }
   interval = null
@@ -18,8 +17,8 @@ class Counter extends React.Component {
     this.setState({ value: curentValue + value })
   }
   changeDetal = value => {
-    const curentValue = this.state.detal
-    this.setState({ detal: curentValue + value })
+    console.log(value, this.props.detal)
+    this.props.onDetalChange(this.props.detal + value)
   }
   reset = () => {
     this.setState({ value: 0 })
@@ -28,7 +27,7 @@ class Counter extends React.Component {
     this.setState({ autoIncreaseOn: !this.state.autoIncreaseOn })
     if (this.state.autoIncreaseOn) {
       this.interval = setInterval(() => {
-        this.change(this.state.detal)
+        this.change(this.props.detal)
       }, this.props.time)
     } else {
       clearInterval(this.interval)
@@ -41,7 +40,6 @@ class Counter extends React.Component {
 
   render() {
     const value = this.state.value
-    const detal = this.state.detal
     return (
       <div>
         <h1>{this.props.name}</h1>
@@ -49,12 +47,15 @@ class Counter extends React.Component {
           current value: <span style={{ color: getColor(value) }}>{value}</span>
         </div>
         <div>
-          <button onClick={() => this.change(this.state.detal)}>
-            Update <span>({this.state.value + this.state.detal})</span>
+          <button onClick={() => this.change(this.props.detal)}>
+            Update <span>({this.state.value + this.props.detal})</span>
           </button>
         </div>
         <div>
-          delta: <span style={{ color: getColor(detal) }}>{detal}</span>
+          delta:{' '}
+          <span style={{ color: getColor(this.props.detal) }}>
+            {this.props.detal}
+          </span>
         </div>
         <div>
           <button onClick={() => this.changeDetal(1)}>Increase</button>

@@ -9,6 +9,10 @@ class App extends React.Component {
   timeChange = event => {
     this.setState({ time: event.target.value })
   }
+  handleDeltaApp = nextDetal => {
+    console.log(nextDetal)
+    this.setState({ detal: nextDetal })
+  }
   render() {
     return (
       <div>
@@ -16,15 +20,17 @@ class App extends React.Component {
           <div>
             <Counter
               name="Counter 1"
-              initialDelta={this.state.detal}
               time={this.state.time}
               initialautoIncreaseOn={false}
+              onDetalChange={this.handleDeltaApp}
+              detal={this.state.detal}
             />
             <Counter
               name="Counter 2"
-              initialDelta={this.state.detal}
               time={this.state.time}
               initialautoIncreaseOn={true}
+              onDetalChange={this.handleDeltaApp}
+              detal={this.state.detal}
             />
             <input
               type="text"
